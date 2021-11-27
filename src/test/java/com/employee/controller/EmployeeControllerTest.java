@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,6 +35,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(controllers = EmployeeController.class)
+@TestInstance(Lifecycle.PER_CLASS)
 class EmployeeControllerTest {
 
 	@Autowired
@@ -45,7 +48,7 @@ class EmployeeControllerTest {
 	private List<Employee> employees;
 	private List<EmployeeDTO> savedEmployees;
 
-	@BeforeEach
+	@BeforeAll
 	void setUp() {
 		employees = new ArrayList<>();
 		employees.add(Employee.builder().id(1L).name("Andrew").employeeId("12345").gender('M').organisation("Nagarro")
