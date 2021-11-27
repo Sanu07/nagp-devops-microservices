@@ -79,9 +79,7 @@ class EmployeeControllerTest {
 	void whenGetEmployee_theReturnEmployeeWithProvidedId() throws JsonProcessingException, Exception {
 		when(employeeService.getEmployee(1L)).thenReturn(savedEmployees.get(0));
 		this.mockMvc
-				.perform(get("/employees/{id}", 1).contentType(MediaType.APPLICATION_JSON)
-						.content(mapper.writeValueAsString(savedEmployees.get(0)))
-						.characterEncoding(StandardCharsets.UTF_8))
+				.perform(get("/employees/{id}", 1))
 				.andExpect(jsonPath("$.name", is(savedEmployees.get(0).getName())))
 				.andExpect(jsonPath("$.organisation", is(savedEmployees.get(0).getOrganisation())))
 				.andExpect(jsonPath("$.id", is(1))).andReturn();
@@ -92,8 +90,7 @@ class EmployeeControllerTest {
 		when(employeeService.findAll()).thenReturn(
 				Employees.builder().employees(savedEmployees).female(1L).male(2L).totalEmployees(3L).build());
 		this.mockMvc
-				.perform(get("/employees").contentType(MediaType.APPLICATION_JSON)
-						.content(mapper.writeValueAsString(savedEmployees)).characterEncoding(StandardCharsets.UTF_8))
+				.perform(get("/employees"))
 				.andExpect(jsonPath("$.totalEmployees", is(3))).andExpect(jsonPath("$.female", is(1)))
 				.andExpect(jsonPath("$.male", is(2))).andReturn();
 	}
