@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employees findAll() {
 		List<Employee> employeeList = employeeDao.findAll();
 		List<EmployeeDTO> employees = employeeList.stream()
-				.map(emp -> EmployeeDTO.builder().id(emp.getId()).employeeId(emp.getEmployeeId())
+				.map(emp -> EmployeeDTO.builder().name(emp.getName()).id(emp.getId()).employeeId(emp.getEmployeeId())
 						.gender(emp.getGender()).organisation(emp.getOrganisation()).build())
 				.collect(Collectors.toUnmodifiableList());
 		Map<Character, Long> genderMap = employeeList.stream()
