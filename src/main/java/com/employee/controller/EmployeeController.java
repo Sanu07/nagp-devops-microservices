@@ -1,5 +1,7 @@
 package com.employee.controller;
 
+import java.util.Objects;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +36,10 @@ public class EmployeeController {
 	@GetMapping("{id}")
 	public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Long id) {
 		EmployeeDTO employee = employeeService.getEmployee(id);
-		return ResponseEntity.ok(employee);
+		if (Objects.nonNull(employee)) {
+			return ResponseEntity.ok(employee);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 	
 	@PostMapping
@@ -44,7 +49,7 @@ public class EmployeeController {
 		Employee savedEmployee = employeeService.saveEmployeeDetails(empEntity);
 		EmployeeDTO empDto = new EmployeeDTO();
 		BeanUtils.copyProperties(savedEmployee, empDto);
-		return ResponseEntity.ok(empDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(empDto);
 	}
 	
 	@PutMapping
