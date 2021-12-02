@@ -1,4 +1,9 @@
 pipeline {
+	environment { 
+	        registry = "sanu07/employee-service" 
+	        registryCredential = 'dockerhub_id' 
+	        dockerImage = '' 
+	    }
     agent any
     stages {
         stage('Clean and Package') {
@@ -18,15 +23,18 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t sanu07/employee-service'
+                script { 
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+                }
             }
         }
         stage('Push to Dockerhub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: '397c47e1-4e41-4b3b-855f-efcbb8db2ea2', passwordVariable: 'pwd', usernameVariable: 'username')]) {
-    				sh 'docker login -u ${username}' -p ${pwd}
-				}
-				sh 'docker push sanu07/employee-service'
+                script { 
+                    docker.withRegistry( '', registryCredential ) { 
+                        dockerImage.push() 
+                    }
+                } 
             }
         }
     }
