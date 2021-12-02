@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+
+  mysql-docker:
+    image: "mysql"
+    restart: always
+    container_name: mysql-docker
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: employee-db
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - app-mysql-network
+    volumes:
+      - mysql-database-data-volume:/var/lib/mysql
+
+  employee-service:
+    build:
+      context: employee-service
+      dockerfile: Dockerfile
+    container_name: employee-service
+    image: employee-service
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-docker:3306/employee-db?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
+    depends_on:
+      - mysql-docker
+    networks:
+      - app-mysql-network
+
+volumes:
+  mysql-database-data-volume:
+    name: mysql-database-data-volume
+
+networks:
+  app-mysql-network:
+    name: app-mysql-network
