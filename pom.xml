@@ -85,6 +85,7 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<finalName>employee-service</finalName>
 	</build>
 
 	<profiles>
