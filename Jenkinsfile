@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-    	maven 'MAVEN'
-    }
     stages {
         stage('Clean and Package') {
             steps {
