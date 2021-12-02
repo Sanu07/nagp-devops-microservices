@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Optional<Employee> employee = employeeDao.findById(id);
 		EmployeeDTO empDto = EmployeeDTO.builder().build();
 		if (employee.isPresent()) {
-			BeanUtils.copyProperties(employee, empDto);
+			BeanUtils.copyProperties(employee.get(), empDto);
 			return empDto;
 		}
 		return null;
