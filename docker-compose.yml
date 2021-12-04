@@ -18,7 +18,6 @@ services:
 
   employee-service:
     build:
-      context: employee-service
       dockerfile: Dockerfile
     container_name: employee-service
     image: employee-service
