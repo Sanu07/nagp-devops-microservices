@@ -1,5 +1,5 @@
 <p align="center">
- <img width="100px" src="https://www.nvisia.com/hubfs/undefined-358500-edited.jpg" align="center" alt="Dev Ops" />
+ <img width="400px" src="https://www.nvisia.com/hubfs/undefined-358500-edited.jpg" align="center" alt="Dev Ops" />
  <h2 align="center">NAGP DevOps Assignment</h2>
  <p>Name: Sanu Ghosh</p>
  <p>Employee Id: 3151843</p>
